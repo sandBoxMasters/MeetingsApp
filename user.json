@@ -1,0 +1,13 @@
+{
+	"userTable":
+	{
+		"UID":			"7747fe0a-f455-4aeb-be39-fb5619d644c1",
+		"userName": 	"superuser",
+		"firstName":	"Super",
+		"lastName": 	"User",
+		"password": 	"superPassword",
+		"email":		"super.user@ipri.fri.uni-lj.si",
+		"role":			"admin",
+		"regDate":		"2012-01-29 20:35:44"
+	}
+}
