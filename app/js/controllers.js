@@ -3,9 +3,13 @@
 /* Controllers */
 
 angular.module('meetingsApp.controllers', [])
-  .controller('MyCtrl1', [function() {
+  .controller('homeCtrl', [function($scope) {
 
   }])
-  .controller('MyCtrl2', [function() {
+  .controller('loginCtrl', [function($scope) {
+
+  }])
+  .controller('registerCtrl', [function($scope) {
 
   }]);
+

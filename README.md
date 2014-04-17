@@ -4,11 +4,11 @@ MeetingsApp
 Developers
 ----------
 
-     * GaÅ¡per PrimoÅ¾iÄ
+     * Gašper Primoiè
      
-     * Metod RibiÄ
+     * Metod Ribiè
      
-     * Marko TavÄar
+     * Marko Tavèar
      
 
 About app
