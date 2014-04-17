@@ -1,0 +1,51 @@
+{
+
+	"userGroupTable":
+	[
+		{
+			"GID": 	"a4539b24-899f-4e9b-917a-3d9c59e3cb14",
+			"UGID":	"0d017e3d-eab0-4ba6-85f5-79e9837999db",
+			"groupName": "sandBoxMasters",
+			"groupDescription": 	"Developer group",
+			"groupDateCreated":		"2013-12-11 23:49:37",
+			"groupLastUpdate":		"2014-01-11 23:49:37",
+			"groupLastUpdateUser":	"7747fe0a-f455-4aeb-be39-fb5619d644c1"
+		},
+		{
+			"GID": 	"a4539b24-899f-4e9b-917a-3d9c59e3cb15",
+			"UGID":	"0d017e3d-eab0-4ba6-85f5-79e9837999dc",
+			"groupName": "sandBoxMasters 1",
+			"groupDescription": 	"Developer group 1",
+			"groupDateCreated":		"2013-12-11 23:49:37",
+			"groupLastUpdate":		"2014-01-11 23:49:37",
+			"groupLastUpdateUser":	"7747fe0a-f455-4aeb-be39-fb5619d644c1"
+		},
+		{
+			"GID": 	"a4539b24-899f-4e9b-917a-3d9c59e3cb16",
+			"UGID":	"0d017e3d-eab0-4ba6-85f5-79e9837999dd",
+			"groupName": "sandBoxMasters 2",
+			"groupDescription": 	"Developer group 2",
+			"groupDateCreated":		"2013-12-11 23:49:37",
+			"groupLastUpdate":		"2014-01-11 23:49:37",
+			"groupLastUpdateUser":	"7747fe0a-f455-4aeb-be39-fb5619d644c1"
+		},
+		{
+			"GID": 	"a4539b24-899f-4e9b-917a-3d9c59e3cb15",
+			"UGID":	"0d017e3d-eab0-4ba6-85f5-79e9837999dc",
+			"groupName": "sandBoxMasters 3",
+			"groupDescription": 	"Developer group 1",
+			"groupDateCreated":		"2013-12-11 23:49:37",
+			"groupLastUpdate":		"2014-01-11 23:49:37",
+			"groupLastUpdateUser":	"7747fe0a-f455-4aeb-be39-fb5619d644c1"
+		},
+		{
+			"GID": 	"a4539b24-899f-4e9b-917a-3d9c59e3cb15",
+			"UGID":	"0d017e3d-eab0-4ba6-85f5-79e9837999dc",
+			"groupName": "sandBoxMasters 4",
+			"groupDescription": 	"Developer group 1",
+			"groupDateCreated":		"2013-12-11 23:49:37",
+			"groupLastUpdate":		"2014-01-11 23:49:37",
+			"groupLastUpdateUser":	"7747fe0a-f455-4aeb-be39-fb5619d644c1"
+		}
+	]
+}
