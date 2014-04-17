@@ -2,16 +2,31 @@
 
 
 // Declare app level module which depends on filters, and services
-angular.module('meetingsApp', [
+var user = "UserName"
+var login = true;
+
+var app = angular.module('meetingsApp', [
   'ngRoute',
-  'myApp.filters',
-  'myApp.services',
-  'myApp.directives',
-  'myApp.controllers',
-  'ui.bootstrap'
-]).
-config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/view1', {templateUrl: 'partials/partial1.html', controller: 'MyCtrl1'});
-  $routeProvider.when('/view2', {templateUrl: 'partials/partial2.html', controller: 'MyCtrl2'});
-  $routeProvider.otherwise({redirectTo: '/view1'});
+  'meetingsApp.filters',
+  'meetingsApp.services',
+  'meetingsApp.directives',
+  'meetingsApp.controllers'
+]);
+
+app.config(['$routeProvider', function($routeProvider) {
+  $routeProvider.when('/home', {title: 'Easy way to setup meetings! ', templateUrl: 'other/home.html', controller: 'homeCtrl'});
+  $routeProvider.when('/login', {title: 'Login page', templateUrl: 'other/login.html', controller: 'loginCtrl'});
+  $routeProvider.when('/register', {title: 'Register to this App!', templateUrl: 'other/register.html', controller: 'registerCtrl'});
+  $routeProvider.otherwise({redirectTo: '/home'});
+}]);
+
+app.run(['$rootScope', function($rootScope) {
+    $rootScope.page = {
+        setTitle: function(title) {
+            this.title = 'Meetings App | '+ title;
+        }
+    }
+    $rootScope.$on('$routeChangeSuccess', function(event, current, previous) {
+        $rootScope.page.setTitle(current.$$route.title || 'Easy way to setup meetings!');
+    });
 }]);
