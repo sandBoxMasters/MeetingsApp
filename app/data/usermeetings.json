@@ -1,0 +1,66 @@
+{
+	"UIDum":			"7747fe0a-f455-4aeb-be39-fb5619d644c1",
+	"userMeetingTable":
+	[
+		{
+			"MIDum":			"de2586c9-ffaa-47ce-949b-5f5fe57621c1",
+			"UMID":				"4535d381-e27c-4d7a-8092-66efcf1ec8d7",
+			"participation":	true,	
+			"umDescription":	"Meeting 1",
+			"delay":			null,
+			"allowUpdate":		false,
+			"umLastUpdate":		"2019-12-05 13:37:29",
+			"dateTimeAccepted":	"2019-12-05 13:37:29",
+			"meetingName": 				"Master meeting 1",
+			"meetingDescription": 		"Project plan",
+			"dateTimeStart": 			"2014-01-29 20:00:00",
+			"dateTimeEnd": 				"2014-01-30 07:35:00",
+			"location": 				"Tržaška cesta 25, Ljubljana",
+			"dateCreated": 				"2019-12-05 13:37:29",
+			"meetingLastUpdate": 		"2019-12-05 13:37:29",
+			"meetingLastUpdateUser": 	"7747fe0a-f455-4aeb-be39-fb5619d644c1",
+			"meetingType":				"Dinking",
+			"meetingPriority:"			"High"
+		},
+		{
+			"MIDum":			"de2586c9-ffaa-47ce-949b-5f5fe57621c2",
+			"UMID":				"4535d381-e27c-4d7a-8092-66efcf1ec8d8",
+			"participation":	true,	
+			"umDescription":	"Meeting 2",
+			"delay":			null,
+			"allowUpdate":		false,
+			"umLastUpdate":		"2019-13-05 13:37:29",
+			"dateTimeAccepted":	"2019-13-05 13:37:29",
+			"meetingName": 				"Master meeting 2",
+			"meetingDescription": 		"Project plan",
+			"dateTimeStart": 			"2014-02-29 20:00:00",
+			"dateTimeEnd": 				"2014-02-30 07:35:00",
+			"location": 				"Tržaška cesta 25, Ljubljana",
+			"dateCreated": 				"2019-12-05 13:37:29",
+			"meetingLastUpdate": 		"2019-12-05 13:37:29",
+			"meetingLastUpdateUser": 	"7747fe0a-f455-4aeb-be39-fb5619d644c1",
+			"meetingType":				"Dinking",
+			"meetingPriority:"			"High"
+		},
+		{
+			"MIDum":			"de2586c9-ffaa-47ce-949b-5f5fe57621c3",
+			"UMID":				"4535d381-e27c-4d7a-8092-66efcf1ec8d9",
+			"participation":	false,	
+			"umDescription":	"Meeting 3",
+			"delay":			null,
+			"allowUpdate":		false,
+			"umLastUpdate":		"2019-14-05 13:37:29",
+			"dateTimeAccepted":	"2019-14-05 13:37:29",
+			"meetingName": 				"Master meeting 3",
+			"meetingDescription": 		"Project plan",
+			"dateTimeStart": 			"2014-03-29 20:00:00",
+			"dateTimeEnd": 				"2014-03-30 07:35:00",
+			"location": 				"Tržaška cesta 25, Ljubljana",
+			"dateCreated": 				"2019-12-05 13:37:29",
+			"meetingLastUpdate": 		"2019-12-05 13:37:29",
+			"meetingLastUpdateUser": 	"7747fe0a-f455-4aeb-be39-fb5619d644c1",
+			"meetingType":				"Dinking",
+			"meetingPriority:"			"High"
+		}
+	]
+}

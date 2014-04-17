@@ -13,9 +13,15 @@
     <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="offcanvas.css" rel="stylesheet">
+    <link href="css/offcanvas.css" rel="stylesheet">
 
     <link href="css/app.css" rel="stylesheet">
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/calendar.css">
+
+
+    <link rel="stylesheet" href="../bower_components/fullcalendar/fullcalendar.css">
+
   </head>
 
   <body>
@@ -43,11 +49,20 @@
 
       <div class="row row-offcanvas row-offcanvas-right">
         <p class="pull-right visible-xs">
-          <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">User Menu</button>
+          <button type="button" class="btn btn-primary btn-lg" data-toggle="offcanvas">User Menu</button>
+          
+          <div class="col-xs-3 col-md-3 col-sm-3 col-lg-3 sidebar-offcanvas navbar-right" id="sidebar" role="navigation">
+          <div class="list-group">
+            <a href="#/profile" class="list-group-item">Profile</a>
+            <a href="#/events" class="list-group-item">My Events</a>
+            <a href="#/groups" class="list-group-item">Groups</a>
+          </div>
+        </div><!--/span-->
+          <div ng-view></div> 
         </p>
 
-        <div ng-view></div> 
-              
+        
+             
       </div>
 
       <hr>
@@ -64,15 +79,20 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="../bower_components/angular/angular.js"></script>
-    <script src="../bower_components/jquery/dist/jquery.min.js"></script>
     <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="../bower_components/angular/angular.js"></script>
     <script src="../bower_components/angular-route/angular-route.js"></script>
+    <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="../bower_components/jquery-ui/ui/jquery-ui.js"></script>
+    <script src="../bower_components/fullcalendar/fullcalendar.js"></script>
+    <script src="../bower_components/fullcalendar/gcal.js"></script>
     <script src="js/app.js"></script>
+    <script src="js/calendar.js"></script>
+    <script src="js/calendarCtrl.js"></script>
     <script src="js/services.js"></script>
     <script src="js/controllers.js"></script>
     <script src="js/filters.js"></script>
     <script src="js/directives.js"></script>
-    <script src="offcanvas.js"></script>
+    <script src="js/offcanvas.js"></script>
   </body>
 </html>
