@@ -1,11 +1,11 @@
 {
-  "name": "angular-seed",
+  "name": "meetingApp",
   "private": true,
-  "version": "0.0.0",
-  "description": "A starter project for AngularJS",
+  "version": "0.0.1",
+  "description": "app for meetings",
   "repository": {
     "type": "git",
-    "url": "https://github.com/angular/angular-seed"
+    "url": "https://github.com/sandBoxMasters/MeetingsApp.git"
   },
   "license": "MIT",
   "devDependencies": {
@@ -17,7 +17,7 @@
   },
   "scripts": {
     "postinstall": "bower install",
-    "start": "http-server -p 8000",
+    "start": "node app.js",
     "test": "karma start test/karma.conf.js",
     "update-webdriver": "webdriver-manager update",
     "protractor": "protractor test/protractor-conf.js",
@@ -30,10 +30,10 @@
     "gzippo": "^0.2.0"
   },
   "bugs": {
-    "url": "https://github.com/angular/angular-seed/issues"
+    "url": "https://github.com/sandBoxMasters/MeetingsApp/issues"
   },
-  "homepage": "https://github.com/angular/angular-seed",
-  "main": "index.js",
+  "homepage": "https://github.com/sandBoxMasters/MeetingsApp",
+  "main": "app.js",
   "directories": {
     "test": "test"
   },
