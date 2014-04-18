@@ -2,14 +2,16 @@
   <div class="jumbotron" ng-controller="groupDetailCtrl">
     <form class="form-signin" role="form" >
         <h2>Edit Profile</h2>
+
         <input type="groupName" class="form-control" value="{{groupDetail.group.groupName}}" required>
         <input type="groupDescription" class="form-control" value="{{groupDetail.group.groupDescription}}" required>
         <input type="groupDateCreated" class="form-control" value="{{groupDetail.group.groupDateCreated}}" readonly>
         <input type="groupLastUpdate" class="form-control" value="{{groupDetail.group.groupLastUpdate}}" readonly>
         <input type="groupLastUpdateUser" class="form-control" value="{{groupDetail.group.groupLastUpdateUser}}" readonly>
-        <hr>
 
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Save changes!</button>
+        <hr>
+        <a class="btn btn-default" href="#/groups" role="button">Back </a><a class="btn btn-default" href="#/groups" role="button">Save changes!</a>
+
         <p> </p>
       </form>
   </div>
