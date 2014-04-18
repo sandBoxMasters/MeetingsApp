@@ -21,6 +21,8 @@ app.config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/events', {title: 'My Events', templateUrl: 'usr/events.html', controller: 'eventsCtrl'});
   $routeProvider.when('/groups', {title: 'My Groups', templateUrl: 'usr/groups.html', controller: 'groupsCtrl'});
   $routeProvider.when('/data/:GID', {title: 'Group Detail', templateUrl: 'usr/groupDetails.html', controller: 'groupDetailCtrl'});
+  $routeProvider.when('/newGroup', {title: 'Create a new group!', templateUrl: 'other/newGroup.html', controller: 'newGroupCtrl'});
+  $routeProvider.when('/newGroupSuccess', {title: 'HOORAY!', templateUrl: 'other/newGroupSuccess.html', controller: 'newGroupSuccessCtrl'});
   $routeProvider.otherwise({redirectTo: '/home'});
 }]);
 
