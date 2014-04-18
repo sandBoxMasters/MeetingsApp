@@ -13,6 +13,14 @@ angular.module('meetingsApp.controllers', [])
 
   }])
 
+  .controller('newGroupCtrl', [function($scope) {
+
+  }])
+
+  .controller('newgroupSuccessCtrl', [function($scope) {
+
+  }])
+
   .controller('profileCtrl', ['$scope', '$http',
   function ($scope, $http) {
     $http.get('data/user.json').success(function(data) {
@@ -40,5 +48,7 @@ angular.module('meetingsApp.controllers', [])
       $scope.groupDetail = data;
     });
   }])
+
+
 
 ;
