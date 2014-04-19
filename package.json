@@ -16,7 +16,7 @@
     "shelljs": "^0.2.6"
   },
   "scripts": {
-    "start": "http-server -p 8000",
+    "start": "node app.js",
     "test": "karma start test/karma.conf.js",
     "update-webdriver": "webdriver-manager update",
     "protractor": "protractor test/protractor-conf.js",
