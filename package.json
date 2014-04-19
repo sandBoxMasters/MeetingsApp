@@ -16,7 +16,7 @@
     "shelljs": "^0.2.6"
   },
   "scripts": {
-    "start": "node app.js",
+    "start": "http-server -p 8000",
     "test": "karma start test/karma.conf.js",
     "update-webdriver": "webdriver-manager update",
     "protractor": "protractor test/protractor-conf.js",
@@ -26,7 +26,8 @@
   "dependencies": {
     "logfmt": "^1.1.2",
     "express": "^4.0.0",
-    "gzippo": "^0.2.0"
+    "gzippo": "^0.2.0",
+    "expres": "0.0.5"
   },
   "bugs": {
     "url": "https://github.com/sandBoxMasters/MeetingsApp/issues"
