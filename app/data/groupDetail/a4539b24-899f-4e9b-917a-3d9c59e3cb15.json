@@ -1,0 +1,26 @@
+{
+	"group":
+	{
+		"GID": 					"a4539b24-899f-4e9b-917a-3d9c59e3cb15",
+		"groupName": 			"sandBoxMasters 1",
+		"groupDescription": 	"Developer group 1",
+		"groupDateCreated":		"2013-12-11 23:49:37",
+		"groupLastUpdate":		"2014-01-11 23:49:37",
+		"groupLastUpdateUser":	"superuser"
+	},
+
+	"users":
+	[
+		{
+			"userName": "speruzeruwh"
+			
+		}, 
+		{
+			"userName": "e213dsa"
+			
+		}, 
+		{
+			"userName": "dcbdgret"
+		}
+	]
+}
