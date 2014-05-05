@@ -1,0 +1,40 @@
+<div class="col-xs-9">
+  <div class="jumbotron" ng-controller="groupDetailCtrl">
+    <!-- GROUP INFO FORM -->
+    <form class="form-signin" role="form">
+        <h2>Edit Group</h2>
+
+        <input type="groupName" class="form-control" value="{{group.group.groupName}}" required>
+        <input type="groupDescription" class="form-control" value="{{group.group.groupDescription}}" required>
+        <input type="groupDateCreated" class="form-control" value="{{group.group.groupDateCreated}}" readonly>
+        <input type="groupLastUpdate" class="form-control" value="{{group.group.groupLastUpdate}}" readonly>
+        <input type="groupLastUpdateUser" class="form-control" value="{{group.group.groupLastUpdateUser}}" readonly>
+        <hr>
+        <a class="btn btn-lg btn-info btn-block" href="#/groups" role="button">Back </a>
+        <a class="btn btn-lg btn-primary btn-block" href="#/groups" role="button">Save changes!</a>
+      </form>
+
+      <!-- GROUP MEMBERS FORM -->
+      <form class="form-signin" role="form">
+        <h2>Members</h2>
+        <div class="table-responsive">
+          <table class="table">
+            <tr class="" ng-repeat="user in group.users">
+              <td>{{user.userName}}</td>
+              <td><a class="btn btn-warning btn-block" href="#/groups" role="button">Remove</a></td>
+            </tr>
+          </table>
+
+        </div>
+
+
+        <input type="addNewUser" class="form-control" placeholder="write username you want to add">
+        <a class="btn btn-lg btn-primary btn-block" href="#/groups" role="button">Add user to {{group.group.groupName}}</a>
+        <hr>
+        <a class="btn btn-lg btn-info btn-block" href="#/groups" role="button">Back </a>
+        <a class="btn btn-lg btn-primary btn-block" href="#/groups" role="button">Save changes!</a>
+      
+
+      </form>
+  </div>
+</div> 
