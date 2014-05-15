@@ -26,9 +26,31 @@ angular.module('meetingsApp.controllers', [])
     $scope.user = User.query();
   }])
 
+  /** ---------- calendar controler ---------- **/
     .controller('eventsCtrl', ['$scope', 'UserEvents',
   function ($scope, UserEvents) {
     $scope.user = UserEvents.query();
+
+    $(document).ready(function() {
+      
+        var date = new Date();
+        var d = date.getDate();
+        var m = date.getMonth();
+        var y = date.getFullYear();
+        
+        $('#calendar').fullCalendar({
+          header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'month,agendaWeek,agendaDay'
+          },
+          editable: true,
+          
+          
+        });
+        
+      });
+
   }])
 
 .controller('groupsCtrl', ['$scope', 'Groups',
