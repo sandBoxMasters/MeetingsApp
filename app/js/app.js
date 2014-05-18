@@ -7,6 +7,7 @@ var login = true;
 
 var app = angular.module('meetingsApp', [
   'ngRoute',
+  'firebase',
   'meetingsApp.animation',
   'meetingsApp.filters',
   'meetingsApp.services',

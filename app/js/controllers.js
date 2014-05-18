@@ -2,12 +2,23 @@
 
 /* Controllers */
 
-angular.module('meetingsApp.controllers', [])
+angular.module('meetingsApp.controllers', ['firebase'])
   .controller('homeCtrl', [function($scope) {
 
   }])
-  .controller('loginCtrl', [function($scope) {
-
+  .controller('loginCtrl', ['$scope', '$rootScope', '$firebaseSimpleLogin', function($scope, $rootScope, $firebaseSimpleLogin) {
+    var ref = new Firebase('https://scorching-fire-5198.firebaseio.com');
+    $rootScope.auth = $firebaseSimpleLogin(ref);
+    $scope.signIn = function () {
+      $rootScope.auth.$login('password', {
+        email: $scope.email,
+        password: $scope.password
+      }).then(function(user) {
+        console.log('Logged in as: ', user.uid);
+      }, function(error) {
+        console.error('Login failed: ', error);
+      });
+    }
   }])
   .controller('registerCtrl', [function($scope) {
 
