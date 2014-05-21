@@ -33,11 +33,17 @@
           </button>
           <a class="navbar-brand" href="#/home">MeetingsApp</a>
         </div>
-        <div class="collapse navbar-collapse navbar-right">
-          <ul class="nav navbar-nav">
+        <div ng-controller="navCtrl" class="collapse navbar-collapse navbar-right" >
+          <ul class="nav navbar-nav" ng-hide="isUserLoggedIn">
             <li><a href="#/login">Login</a></li>
             <li><a href="#/register">Register</a></li>
           </ul>
+
+          <ul class="nav navbar-nav" ng-show="isUserLoggedIn">
+            <li><a href="#/profile">{{userL.email}}</a></li>
+            <li><a ng-click="logout()">Log out!</a></li>
+          </ul>
+
         </div><!-- /.nav-collapse -->
       </div><!-- /.container -->
     </div><!-- /.navbar -->
@@ -49,7 +55,7 @@
           <button type="button" class="btn btn-primary btn-lg" data-toggle="offcanvas">User Menu</button>
           
           <div class="col-xs-3 col-md-3 col-sm-3 col-lg-3 sidebar-offcanvas navbar-right" id="sidebar" role="navigation">
-          <div class="list-group">
+          <div ng-controller="navCtrl"class="list-group" ng-show="isUserLoggedIn">
             <a href="#/profile" class="list-group-item">Profile</a>
             <a href="#/events" class="list-group-item">My Events</a>
             <a href="#/groups" class="list-group-item">Groups</a>
