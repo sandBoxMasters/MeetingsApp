@@ -9,7 +9,7 @@
   value('version', '0.1');
 */
 
-var meetingsAppServices = angular.module('meetingsApp.services', ['ngResource']);
+var meetingsAppServices = angular.module('meetingsApp.services', ['ngResource', 'firebase']);
 
 meetingsAppServices
 	.factory('Group', ['$resource',
@@ -35,6 +35,35 @@ meetingsAppServices
 			return $resource('data/user.json', {}, {
 			query: {method:'GET', params:{}, isArray:false}
 		});
+	}])
+	.factory('UserSession', ['$firebase', 
+		function($firebase) {
+			var authenticated = false;
+			var userL = {};
+			
+			var userB = {};
+			var ref;
+			return {  
+				isAuthenticated: function () {
+					return authenticated;
+				},
+
+				setAuthenticated: function(auth)
+				{
+					authenticated = auth;
+				},
+
+				getUserL: function() {
+					return userL;
+				},
+
+				login: function(user) {
+					userL = user;
+					ref =  new Firebase('https://scorching-fire-5198.firebaseio.com');				
+					userB = $firebase(ref);
+					authenticated = true;
+				}
+			}
 	}])
 
 ;
