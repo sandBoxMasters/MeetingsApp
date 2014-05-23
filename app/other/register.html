@@ -2,13 +2,11 @@
 	<div class="jumbotron">
 		<form class="form-signin" role="form" >
         <h2>Register</h2>
-
-        <input type="lastName" class="form-control" placeholder="Last name" required>
-        <input type="email" class="form-control" placeholder="Email address" required>
-        <input type="password1" class="form-control" placeholder="Password" required>
-        <input type="password2" class="form-control" placeholder="Confirm password" required>
-        <hr>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
-      </form>
+			<input type="text" ng-model="regName" class="form-control" placeholder="Nickname" required>
+			<input type="email" ng-model="regEmail" class="form-control" placeholder="Email address" required>
+			<input type="password" ng-model="regPass" class="form-control" placeholder="Password" required>
+			<hr>
+			<button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="register()">Register</button>
+		</form>
 	</div>
 </div> 

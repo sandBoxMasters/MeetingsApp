@@ -12,7 +12,8 @@ var app = angular.module('meetingsApp', [
   'meetingsApp.filters',
   'meetingsApp.services',
   'meetingsApp.directives',
-  'meetingsApp.controllers'
+  'meetingsApp.controllers',
+  'ngCookies'
 ]);
 
 app.config(['$routeProvider', function($routeProvider) {

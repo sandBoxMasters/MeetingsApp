@@ -40,7 +40,6 @@ meetingsAppServices
 		function($firebase) {
 			var authenticated = false;
 			var userL = {};
-			
 			var userB = {};
 			var ref;
 			return {  
