@@ -4,11 +4,32 @@
 var user_id;
 
 angular.module('meetingsApp.controllers', ['firebase', 'ngRoute'])
-  .controller('homeCtrl', [function($scope) {
+  .controller('homeCtrl', ['$scope', 'UserSession', '$location', 
+	function($scope, UserSession, $location) 
+	{
+		$scope.auth = UserSession.isAuthenticated();
+		$scope.userL = UserSession.getUserL();
+		
+		var ref = new Firebase('https://scorching-fire-5198.firebaseio.com');
+		var auth = new FirebaseSimpleLogin(ref, function(error, user)
+			{
+				if (user)
+				{
+					console.log('in home!');
+					// redirect..
+					$location.path('/events');
+					console.log('in home?');
+				}
+				else
+				{
+					console.log('what?');
+				}
+			}
+		);
+	}
+  ])
 
-  }])
-
-/* -------------------------------------------------- login controler ---------------------------------------------------------------------- */  
+/* -------------------------------------------------- login controler ---------------------------------------------------------------------- */
 
   .controller('loginCtrl', ['$scope', '$firebaseSimpleLogin', 'UserSession', '$location', function($scope, $firebaseSimpleLogin, UserSession, $location) {
     var ref = new Firebase('https://scorching-fire-5198.firebaseio.com');
@@ -23,28 +44,93 @@ angular.module('meetingsApp.controllers', ['firebase', 'ngRoute'])
         user_id = user.uid;
         UserSession.login(user);
         $location.path('/events');
-        console.log('Logged in as: ', user.uid);
+        console.log('User: ' + user.uid + ', Provider: ' + user.provider);
+		
+			if (user.provider === "facebook")
+			{
+				if (typeof $scope.users[user.uid] === "undefined" )
+				{
+					$scope.users[user.uid] = user;
+					$scope.users.$save(user.uid);
+				}else
+				{
+					$scope.users.$save(user.uid);
+				}
+			}
       }
       else { console.log('user is logged out'); }
     });
   
     $scope.LoginEP = function()
     {
-
       auth.login('password',
         {
           email: $scope.email,
           password: $scope.password
         });
     }
+	
+	$scope.LoginFB = function() {
+		auth.login('facebook', {
+			scope: 'email,user_likes'
+		});
+	}
   }])
 
 
 /* -------------------------------------------------- end of login controler ---------------------------------------------------------------------- */
 
-  .controller('registerCtrl', [function($scope) {
-
-  }])
+  .controller('registerCtrl', ['$scope', 'UserSession', '$firebase', '$location', 
+	function($scope, UserSession, $firebase, $location)
+	{
+		var ref = new Firebase("https://scorching-fire-5198.firebaseio.com");
+		var auth = new FirebaseSimpleLogin(ref, function(error, user) {
+			if (error) 
+			{
+				console.log(error);
+			} 
+			else if (user) {
+				$scope.user = user
+				user_id = user.uid;
+				UserSession.login(user);
+				console.log('User: ' + user.uid + ', Provider: ' + user.provider);
+			}
+		});
+		
+		$scope.register = function()
+		{
+			auth.createUser($scope.regEmail, $scope.regPass, function(error, user) 
+			{
+				if (error) 
+				{
+					console.log('Error', error);
+					alert("There was an error creating a user! The email is already in use!");
+				}
+				else
+				{
+					var users = new Firebase("https://scorching-fire-5198.firebaseio.com/users");
+					$scope.users = $firebase(users);
+					
+					var otherData = {
+						email: $scope.regEmail,
+						name: $scope.regName,
+					}
+					
+					$scope.users[user.uid] = otherData;
+					$scope.users.$save(user.uid);
+					
+					auth.login('password', 
+						{
+						email: $scope.regEmail,
+						password: $scope.regPass,
+						rememberMe: true
+						}
+					);
+				}
+			});
+		};
+	}
+  ])
 
   .controller('newGroupCtrl', [function($scope) {
 
@@ -61,45 +147,57 @@ angular.module('meetingsApp.controllers', ['firebase', 'ngRoute'])
 
 /* -------------------------------------------------- calendar controler ---------------------------------------------------------------------- */
 
-  .controller('eventsCtrl', ['$scope', 'UserEvents', 'UserSession',
-    function($scope, UserEvents, UserSession) {
-      var testObj = new Firebase('https://scorching-fire-5198.firebaseio.com/meetingTable');
-      //console.log(testObj.toSource());
-      //console.log(user_id);
-      var dbase = new Firebase('https://scorching-fire-5198.firebaseio.com/meetingTable/Master Meeting');
-      dbase.on('value', function(meeting){
-        var meetingObj = {title: meeting.val()['meetingDescription'], start: meeting.val()['dateTimeStart'], end: meeting.val()['dateTimeEnd']};
-        
-       
-        var date = new Date();
-        var d = date.getDate();
-        var m = date.getMonth();
-        var y = date.getFullYear();
+  .controller('eventsCtrl', ['$scope', 'UserEvents', 'UserSession', '$location',
+    function($scope, UserEvents, UserSession, $location)
+	{
+		if(UserSession.isAuthenticated())
+		{
+			var kozouc = new Array();
+			var userEventRef = new Firebase('https://scorching-fire-5198.firebaseio.com/users/simplelogin%3A2/eventlist/'); //USER NEEDED!!!
+			var userEventsRef = userEventRef.on('value', function(tmp)
+			{
+				tmp.forEach(function(superdrek)
+				{
+				//console.log(superdrek.val().title); //eventi
+					var kmet = superdrek.val().title;
+					var banja = new Firebase('https://scorching-fire-5198.firebaseio.com/meetings/'+kmet);
+					banja.on('value', function(meeting1)
+					{
+						var meetingObj1 = {title: meeting1.val().meetingDescription, start: meeting1.val().start, end: meeting1.val().end};
+						kozouc.push(meetingObj1);
+					})
+				})
+			});
 
-                    
-        $('#calendar').fullCalendar({
-            header: {
-              left: 'prev,next today',
-              center: 'title',
-              right: 'month,agendaWeek,agendaDay',
-            },
-            editable: true,
-            disableDragging: true,
 
-            eventSources: [{
-                events: [{
-                  title: meetingObj.title,
-                  start: meetingObj.start,
-                  end: meetingObj.end
-                }],
+			var dbase = new Firebase('https://scorching-fire-5198.firebaseio.com/meetings/Master Meeting');
+			dbase.on('value', function(meeting){
+			var meetingObj = {title: meeting.val().meetingDescription, start: meeting.val().start, end: meeting.val().end};
+			  
+			console.log(JSON.stringify(kozouc));        
+			$('#calendar').fullCalendar({
+				header: {
+					left: 'prev,next today',
+					center: 'title',
+					right: 'month,agendaWeek,agendaDay',
+				},
+				editable: true,
+				disableDragging: true,
 
-                type: 'GET',
-                color: 'yellow',     // an option!
-                textColor: 'black' // an option!
-            }]  
-        });
+				eventSources: [{
+					events: kozouc,
 
-      });
+					type: 'GET',
+					color: 'yellow',
+					textColor: 'black'
+				}]  
+			  });
+			});
+		}
+		else
+		{
+			$location.path('/home');
+		}
     }
   ])
 
@@ -132,16 +230,19 @@ angular.module('meetingsApp.controllers', ['firebase', 'ngRoute'])
         $scope.isUserLoggedIn = false;
       }
     });
+	
     $scope.logout = function(){
+	  console.log('i was called?');
       auth.logout();
       UserSession.setAuthenticated(false);
       $location.path('/home');
       $scope.isUserLoggedIn = false;
-
+	  $scope.user = {};
     }
   })
 
 ;
+
 
 
 
