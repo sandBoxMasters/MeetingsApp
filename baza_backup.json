@@ -1,0 +1,110 @@
+{
+  "users" : {
+    "simplelogin:46" : {
+      "name" : "Ribic testira šeenkrat",
+      "email" : "radBiRibeLovil@banja.com",
+      "id" : "simplelogin:46"
+    },
+    "simplelogin:48" : {
+      "name" : "tester",
+      "email" : "tester@gmail.com",
+      "id" : "simplelogin:48"
+    },
+    "simplelogin:45" : {
+      "name" : "asi ribca?",
+      "email" : "metod.ribic1@gmail.com",
+      "id" : "simplelogin:45",
+      "eventlist" : {
+        "-JNhs-UakHeybgihPBTV" : {
+          "title" : "-JNhs-UYy2HddTkvbENU"
+        }
+      }
+    },
+    "simplelogin:47" : {
+      "name" : "Admin",
+      "email" : "admin@admin.si",
+      "id" : "simplelogin:47",
+      "eventlist" : {
+        "-JNhqmIpmiAJhQNjVdaO" : {
+          "title" : "-JNhqmIm9SKkkQNn8mOb"
+        },
+        "-JNhpOS6S1b2Stb71C8b" : {
+          "title" : "-JNhpOS2zIoiujqjYZe4"
+        },
+        "-JNjHISHH1PF8KcygCh9" : {
+          "title" : "-JNjHIS6akPicMpOhYUj"
+        },
+        "-JNiVCIhNaTqeaohBvrb" : {
+          "title" : "-JNiVCIfjBZ1JH5ckytC"
+        },
+        "0" : {
+          "title" : "Klobase"
+        }
+      }
+    },
+    "simplelogin:49" : {
+      "name" : "običn kupus",
+      "email" : "kupus@kupus.com",
+      "id" : "simplelogin:49"
+    },
+    "facebook:10151986688171910" : {
+      "name" : "mrk9",
+      "id" : "facebook:10151986688171910",
+      "eventlist" : {
+        "-JNilcf4GbMy0-fDcRTl" : {
+          "title" : "-JNilceftnlxMD5yXbAH"
+        }
+      }
+    }
+  },
+  "meetings" : {
+    "-JNiVCIfjBZ1JH5ckytC" : {
+      "location" : "LA",
+      "allDay" : true,
+      "meetingDescription" : "IT konferenca",
+      "start" : "2014-05-11 15:00:00",
+      "end" : "2014-05-11 16:00:00"
+    },
+    "-JNhs-UYy2HddTkvbENU" : {
+      "location" : "LRIx",
+      "allDay" : false,
+      "meetingDescription" : "Predstavitev",
+      "start" : "2014-05-30 08:00:00",
+      "end" : "2014-05-30 12:56:14"
+    },
+    "Klobase" : {
+      "location" : "Tam nek, 1000 Ljubljana",
+      "meetingDescription" : "prodaja jagod na tržnici",
+      "dateCreated" : "2013-05-05 13:37:29",
+      "start" : "2014-05-23 08:00:00",
+      "end" : "2014-05-33 14:30:00"
+    },
+    "-JNhqmIm9SKkkQNn8mOb" : {
+      "location" : "pumpa",
+      "meetingDescription" : "menjava olja",
+      "start" : "2014-05-06 12:51:03",
+      "end" : "2014-05-06 14:51:05"
+    },
+    "-JNilceftnlxMD5yXbAH" : {
+      "location" : "na slonu",
+      "allDay" : true,
+      "meetingDescription" : "kr prek telefoncka..",
+      "start" : "2014-05-08 17:08:19",
+      "end" : "2014-05-09 17:08:26"
+    },
+    "-JNhpOS2zIoiujqjYZe4" : {
+      "location" : "planjava 23",
+      "meetingDescription" : "obiranje jagod",
+      "start" : "2014-05-18 12:45:01",
+      "end" : "2014-05-24 12:45:04"
+    },
+    "Master Meeting" : {
+      "invitedUsers" : [ "simplelogin:5", "simplelogin:2" ],
+      "location" : "Tržaška cesta 25, Ljubljana",
+      "meetingDescription" : "Project plan",
+      "dateCreated" : "2012-12-05 13:37:29",
+      "start" : "2014-05-29 20:00:00",
+      "end" : "2014-05-30 07:35:00"
+    }
+  }
+}

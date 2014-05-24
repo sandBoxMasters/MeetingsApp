@@ -1,0 +1,41 @@
+<div class="col-xs-9">
+ 	<div class="jumbotron">
+		<form class="form-signin" role="form">
+        <h2>New event</h2>
+			<input type="text" ng-model="desc" class="form-control" maxlength="30" placeholder="Description.. max 30 chars" required autofocus>
+			<div class='input-group date' id='dtp1' data-date-format="YYYY-MM-DD HH:mm:ss">
+				<input type="text" ng-model="timeStart" class="form-control" placeholder="start time" required>
+				<span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
+			</div>
+			<div class='input-group date' id='dtp2' data-date-format="YYYY-MM-DD HH:mm:ss">
+				<input type="text" ng-model="timeEnd" class="form-control" placeholder="end time" required>
+				<span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
+			</div>
+			<input type="text" ng-model="location" class="form-control" placeholder="Location" required>
+			
+			<label class="checkbox">
+				<input type="checkbox" value="allday" ng-model="allDayEvent">Is this ALL-DAY event?</input>
+			</label>
+			
+
+			<select class="form-control" name="id" data-ng-model="tagsSelection"  data-ui-select2="{}" multiple >
+                <option value="{{obj.id}}" data-ng-repeat="obj in tagData" placeholder="Want to invite others? Click here!">{{obj.text}}</option>
+            </select> 
+			<br>
+
+	
+			
+			<button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="createEvent()">Create</button>
+		</form>
+        <script type="text/javascript">
+            $(function () {
+                $('#dtp1').datetimepicker({
+                });
+            });
+			$(function () {
+                $('#dtp2').datetimepicker({
+                });
+            });
+        </script>
+	</div>
+</div>
