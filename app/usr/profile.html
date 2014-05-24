@@ -1,12 +1,20 @@
 <div class="col-xs-9">
-  <div class="jumbotron" ng-controller="navCtrl">
+  <div class="jumbotron">
     <form class="form-signin" role="form" >
-        <h2>Edit Profile</h2>
-        <input type="userName" class="form-control" value="{{userL.name}} " required>
-        <input type="email" class="form-control" value="{{userL.email}}" required>
-        <hr>
-        <a class="btn btn-lg btn-primary btn-block" type="submit" href="#/home">Save changes!</a>
-        <p> </p>
-      </form>
+		<div class="form-group">
+			<h2>Edit Profile</h2>
+			<input type="text" class="form-control" ng-model="userInfo.name" ng-init="userInfo.name" required>
+			<input type="email" class="form-control" value="{{userInfo.email}}" disabled required>
+			<button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="changeName()">Change name</button>
+		</div>
+	</form>
+	
+	<form class="form-signin">
+		<div class="form-group">
+			<input type="password" ng-model="oldPW" class="form-control" placeholder="old password">
+			<input type="password" ng-model="newPW" class="form-control" placeholder="new password">
+			<button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="changePassword()">Change password</button>
+		</div>
+	</form>
   </div>
 </div> 

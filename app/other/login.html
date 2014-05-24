@@ -4,14 +4,11 @@
         <h2>Login</h2>
         <input type="email" ng-model="email" class="form-control" placeholder="Email address" required autofocus>
         <input type="password" ng-model="password" class="form-control" placeholder="Password" required>
-        <label class="checkbox">
-          <input type="checkbox" value="remember-me"> Remember me
-        </label>
         <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="LoginEP()">Sign in</button>
         <label>
         	<a href="#/register">Don't have an account? Register here!</a>
     	</label>
       </form>
-	  <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="LoginFB()">Sign in with FB</button>
+	  <button class="btn btn-lg btn-primary" type="submit" ng-click="LoginFB()">Sign in with FB</button>
 	</div>
 </div> 

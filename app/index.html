@@ -12,6 +12,7 @@
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css">
 
     <!-- Custom styles for this template -->
     <link rel="stylesheet" href="css/offcanvas.css">
@@ -19,6 +20,7 @@
     <link rel="stylesheet" href="css/calendar.css">
     <link rel="stylesheet" href="css/fullcalendar.css">
     <link rel="stylesheet" href="css/animation.css">
+	<link rel="stylesheet" href="css/select2.css">
   </head>
 
   <body>
@@ -41,7 +43,7 @@
 
           <ul class="nav navbar-nav" ng-show="isUserLoggedIn">
             <li><a href="#/profile">{{userL.email}}</a></li>
-            <li><a ng-click="logout()">Log out!</a></li>
+            <li><a href="#/home" ng-click="logout()">Log out!</a></li>
           </ul>
 
         </div><!-- /.nav-collapse -->
@@ -58,7 +60,7 @@
           <div ng-controller="navCtrl"class="list-group" ng-show="isUserLoggedIn">
             <a href="#/profile" class="list-group-item">Profile</a>
             <a href="#/events" class="list-group-item">My Events</a>
-            <a href="#/groups" class="list-group-item">Groups</a>
+            <!--<a href="#/groups" class="list-group-item">Groups</a>-->
           </div>
         </div><!--/span-->
           <div class="view-container">
@@ -87,7 +89,9 @@
     <!--<script src="js/other/jquery.min.js"></script>-->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="js/other/jquery-ui/jquery-ui.min.js"></script>
+	<script src="js/other/moment.min.js"></script>
     <script src="js/other/bootstrap.min.js"></script>
+	<script src="js/other/select2.min.js"></script>
     <script src="js/other/angular.min.js"></script>
     <script src="js/other/angular-resource.min.js"></script>
     <script src="js/other/angular-route.min.js"></script>
@@ -97,6 +101,7 @@
     <script src="https://cdn.firebase.com/libs/angularfire/0.7.1/angularfire.js"></script>
     <script src="https://cdn.firebase.com/js/simple-login/1.4.1/firebase-simple-login.js"></script>
     <script src="js/other/fullcalendar.min.js"></script>
+	<script src="js/other/bootstrap-datetimepicker.min.js"></script>
     <script src="js/other/gcal.js"></script>
     <script src="js/app.js"></script>
     <script src="js/calendar.js"></script>
@@ -106,5 +111,7 @@
     <script src="js/filters.js"></script>
     <script src="js/directives.js"></script>
     <script src="js/offcanvas.js"></script>
+	<script src="js/other/angular_select2.js"></script>
+	
   </body>
 </html>

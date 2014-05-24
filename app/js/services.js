@@ -55,7 +55,64 @@ meetingsAppServices
 				getUserL: function() {
 					return userL;
 				},
-
+				
+				getUserInfo: function(){
+					if(authenticated){
+						var info = new Firebase('https://scorching-fire-5198.firebaseio.com/users/'+userL.uid);
+						var data = new Array();
+						info.on('value', function(inf){
+							data = { name: inf.val().name, email :inf.val().email };
+						})
+						return data;
+					}
+				},
+				
+				createEvent: function(desc, timeStart, timeEnd, loca, allday1, usrList) {
+					if(authenticated)
+					{
+						var db = new Firebase('https://scorching-fire-5198.firebaseio.com/meetings');
+						var userRef = new Firebase('https://scorching-fire-5198.firebaseio.com/users/'+userL.uid+'/eventlist/');
+						var meetingData = {
+							start: timeStart,
+							end: timeEnd, 
+							location: loca, 
+							meetingDescription: desc,
+							allDay: allday1,
+							invitedUsers: usrList,
+						}
+						
+						var meetingLink = db.push(meetingData);
+						var meetingID = meetingLink.path.m[1];
+						userRef.push({title : meetingID});
+						
+						/*add to other users*/
+						if(usrList != null)
+						{
+							usrList.forEach(function(tmpUID)
+							{
+								userRef = new Firebase('https://scorching-fire-5198.firebaseio.com/users/'+tmpUID+'/eventlist/');
+								userRef.push({title : meetingID});
+							});
+						}
+						
+						return true;
+					}
+					return false;
+				},
+				
+				changeName: function(newName)
+				{
+					if(authenticated)
+					{
+						console.log('as kle?');
+						var db = new Firebase('https://scorching-fire-5198.firebaseio.com/users/'+userL.uid);
+						db.update({name: newName});
+						return true;
+					}
+					console.log('al te pa ni!');
+					return false;
+				},
+				
 				login: function(user) {
 					userL = user;
 					ref =  new Firebase('https://scorching-fire-5198.firebaseio.com');				

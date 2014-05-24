@@ -15,14 +15,7 @@ angular.module('meetingsApp.controllers', ['firebase', 'ngRoute'])
 			{
 				if (user)
 				{
-					console.log('in home!');
-					// redirect..
-					$location.path('/events');
-					console.log('in home?');
-				}
-				else
-				{
-					console.log('what?');
+					//TODO: REDIRECT
 				}
 			}
 		);
@@ -38,6 +31,7 @@ angular.module('meetingsApp.controllers', ['firebase', 'ngRoute'])
       if(error)
       {
         console.log(error);
+		alert('Email or password incorrect.');
       }
       else if(user)
       {
@@ -88,6 +82,7 @@ angular.module('meetingsApp.controllers', ['firebase', 'ngRoute'])
 			if (error) 
 			{
 				console.log(error);
+				alert('Email is already in use :\'\(');
 			} 
 			else if (user) {
 				$scope.user = user
@@ -112,6 +107,7 @@ angular.module('meetingsApp.controllers', ['firebase', 'ngRoute'])
 					$scope.users = $firebase(users);
 					
 					var otherData = {
+						id: user.uid,
 						email: $scope.regEmail,
 						name: $scope.regName,
 					}
@@ -140,10 +136,55 @@ angular.module('meetingsApp.controllers', ['firebase', 'ngRoute'])
 
   }])
 
-  .controller('profileCtrl', ['$scope', 'User',
-    function ($scope, User) {
-      $scope.user = User.query();
-  }])
+  .controller('profileCtrl', ['$scope', 'UserSession', '$firebase', '$location', 
+    function ($scope, UserSession, $fireabse, $location) 
+	{
+		var redirect = false;
+		var ref = new Firebase('https://scorching-fire-5198.firebaseio.com');
+		var auth = new FirebaseSimpleLogin(ref, function(error, user)
+			{
+				if(error)
+				{
+					console.log('error:', error);
+				}
+				else if(user)
+				{
+					
+				}
+				else
+				{
+
+				}
+			}
+		);
+		
+		$scope.userInfo = UserSession.getUserInfo();
+		
+		$scope.changeName = function()
+		{
+			console.log('changeName');
+			if(!UserSession.changeName($scope.userInfo.name)) alert('Error changing name.');
+			else alert('Name changed!');
+		}
+		
+		$scope.changePassword = function()
+		{
+			console.log('changePassword');
+			auth.changePassword($scope.userInfo.email, $scope.oldPW, $scope.newPW, 
+				function(error, success)
+				{
+					if(!error)
+						alert('Success: ', success);
+					else
+					{
+						alert('Error changing passowrd.');
+						console.log('Error: ', error);
+					}
+				}
+			);
+		}
+	}
+  ])
 
 /* -------------------------------------------------- calendar controler ---------------------------------------------------------------------- */
 
@@ -152,29 +193,26 @@ angular.module('meetingsApp.controllers', ['firebase', 'ngRoute'])
 	{
 		if(UserSession.isAuthenticated())
 		{
-			var kozouc = new Array();
-			var userEventRef = new Firebase('https://scorching-fire-5198.firebaseio.com/users/simplelogin%3A2/eventlist/'); //USER NEEDED!!!
+			var user = UserSession.getUserL().uid;
+			var eventsData = new Array();
+			var userEventRef = new Firebase('https://scorching-fire-5198.firebaseio.com/users/'+user+'/eventlist/');
 			var userEventsRef = userEventRef.on('value', function(tmp)
 			{
-				tmp.forEach(function(superdrek)
+				tmp.forEach(function(arg)
 				{
-				//console.log(superdrek.val().title); //eventi
-					var kmet = superdrek.val().title;
-					var banja = new Firebase('https://scorching-fire-5198.firebaseio.com/meetings/'+kmet);
-					banja.on('value', function(meeting1)
-					{
-						var meetingObj1 = {title: meeting1.val().meetingDescription, start: meeting1.val().start, end: meeting1.val().end};
-						kozouc.push(meetingObj1);
+					var dogodek = arg.val().title;
+					//console.log("DOGODEK:" ,dogodek);
+					var nastavek = new Firebase('https://scorching-fire-5198.firebaseio.com/meetings/'+dogodek);
+					nastavek.on('value', function(meeting1)
+					{	
+						var meetingObj1 = {title: meeting1.val().meetingDescription, start: meeting1.val().start, end: meeting1.val().end, allDay: meeting1.val().allDay, durationEditable: false};
+						eventsData.push(meetingObj1);
 					})
 				})
 			});
 
-
-			var dbase = new Firebase('https://scorching-fire-5198.firebaseio.com/meetings/Master Meeting');
-			dbase.on('value', function(meeting){
-			var meetingObj = {title: meeting.val().meetingDescription, start: meeting.val().start, end: meeting.val().end};
 			  
-			console.log(JSON.stringify(kozouc));        
+			//console.log(JSON.stringify(eventsData));        
 			$('#calendar').fullCalendar({
 				header: {
 					left: 'prev,next today',
@@ -185,14 +223,14 @@ angular.module('meetingsApp.controllers', ['firebase', 'ngRoute'])
 				disableDragging: true,
 
 				eventSources: [{
-					events: kozouc,
+					events: eventsData,
 
 					type: 'GET',
 					color: 'yellow',
 					textColor: 'black'
 				}]  
 			  });
-			});
+			
 		}
 		else
 		{
@@ -202,6 +240,60 @@ angular.module('meetingsApp.controllers', ['firebase', 'ngRoute'])
   ])
 
 /* -------------------------------------------------- end of calendar controler ------------------------------------------------------------- */
+
+.controller('createEventCtrl', [ '$scope', '$firebase', '$location', 'UserSession',
+	function($scope, $firebase, $location, UserSession)
+	{
+		if(!UserSession.isAuthenticated()) $location.path('/');
+		
+		var ref = new Firebase('https://scorching-fire-5198.firebaseio.com');
+		var auth = new FirebaseSimpleLogin(ref, function(error, user)
+		{
+			if(error)
+			{
+				console.log('Error: ', error);
+			}
+			else if(user)
+			{
+				// TODO
+			}
+			else
+			{
+				$location.path('/');
+			}
+		});
+		
+		$scope.createEvent = function()
+		{
+
+			$scope.timeStart=$("#dtp1").find("input").val();
+			$scope.timeEnd=$("#dtp2").find("input").val();
+			if(angular.isUndefined($scope.allDayEvent) || $scope.allDayEvent === null) $scope.allDayEvent=false
+
+			if(!UserSession.createEvent($scope.desc, $scope.timeStart, $scope.timeEnd, $scope.location,$scope.allDayEvent, $scope.tagsSelection))
+			{
+				alert('There was an error creating new event :\(');
+			}else { $location.path('/events'); }
+		};
+		
+		var userObj = new Firebase('https://scorching-fire-5198.firebaseio.com/users');
+		var vsi = new Array();
+		var userValue = userObj.on('value', function(tmp)
+		{	//console.log(tmp.val());
+				tmp.forEach(function(arg)
+				{	
+					vsi.push({id: arg.val().id, text: arg.val().email});
+				});
+
+		});
+		
+		$scope.tagsSelection=[];
+		$scope.tagData = vsi;    
+
+	}
+])
+
+/*--------------------------------end------------------------------------*/
 
 .controller('groupsCtrl', ['$scope', 'Groups',
   function ($scope, Groups) {
@@ -232,7 +324,7 @@ angular.module('meetingsApp.controllers', ['firebase', 'ngRoute'])
     });
 	
     $scope.logout = function(){
-	  console.log('i was called?');
+	  //console.log('i was called? NOOOO');
       auth.logout();
       UserSession.setAuthenticated(false);
       $location.path('/home');
