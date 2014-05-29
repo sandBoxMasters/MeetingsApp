@@ -38,6 +38,6 @@ app.run(['$rootScope', function($rootScope) {
         }
     }
     $rootScope.$on('$routeChangeSuccess', function(event, current, previous) {
-        $rootScope.page.setTitle(current.$$route.title || 'Easy way to setup meetings!');
+        //$rootScope.page.setTitle(current.$$route.title || 'Easy way to setup meetings!');
     });
 }]);

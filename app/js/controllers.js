@@ -4,27 +4,18 @@
 var user_id;
 
 angular.module('meetingsApp.controllers', ['firebase', 'ngRoute'])
-  .controller('homeCtrl', ['$scope', 'UserSession', '$location', 
-	function($scope, UserSession, $location) 
+  .controller('homeCtrl', ['$scope', 'UserSession', '$location', '$cookieStore',
+	function($scope, UserSession, $location, $cookieStore) 
 	{
-		$scope.auth = UserSession.isAuthenticated();
-		$scope.userL = UserSession.getUserL();
-		
-		var ref = new Firebase('https://scorching-fire-5198.firebaseio.com');
-		var auth = new FirebaseSimpleLogin(ref, function(error, user)
-			{
-				if (user)
-				{
-					//TODO: REDIRECT
-				}
-			}
-		);
+		$scope.auth = $cookieStore.get('loggedIn');
+		$scope.userLogin = UserSession.getUserL();
 	}
   ])
 
 /* -------------------------------------------------- login controler ---------------------------------------------------------------------- */
 
-  .controller('loginCtrl', ['$scope', '$firebaseSimpleLogin', 'UserSession', '$location', function($scope, $firebaseSimpleLogin, UserSession, $location) {
+  .controller('loginCtrl', ['$scope', '$firebaseSimpleLogin', 'UserSession', '$location', '$cookieStore',
+  function($scope, $firebaseSimpleLogin, UserSession, $location, $cookieStore) {
     var ref = new Firebase('https://scorching-fire-5198.firebaseio.com');
     var auth = new FirebaseSimpleLogin(ref, function(error, user)
     {
@@ -62,12 +53,14 @@ angular.module('meetingsApp.controllers', ['firebase', 'ngRoute'])
           email: $scope.email,
           password: $scope.password
         });
+		$cookieStore.put('loggedIn', true);
     }
 	
 	$scope.LoginFB = function() {
 		auth.login('facebook', {
 			scope: 'email,user_likes'
 		});
+		$cookieStore.put('loggedIn', true);
 	}
   }])
 
@@ -139,6 +132,13 @@ angular.module('meetingsApp.controllers', ['firebase', 'ngRoute'])
   .controller('profileCtrl', ['$scope', 'UserSession', '$firebase', '$location', 
     function ($scope, UserSession, $fireabse, $location) 
 	{
+		$scope.auth = UserSession.isAuthenticated();
+		$scope.userLogin = UserSession.getUserL();
+		
+		if(!UserSession.isAuthenticated())
+		{
+			$location.path('/home');
+		}
 		var redirect = false;
 		var ref = new Firebase('https://scorching-fire-5198.firebaseio.com');
 		var auth = new FirebaseSimpleLogin(ref, function(error, user)
@@ -148,12 +148,10 @@ angular.module('meetingsApp.controllers', ['firebase', 'ngRoute'])
 					console.log('error:', error);
 				}
 				else if(user)
-				{
-					
-				}
+				{	}
 				else
 				{
-
+					
 				}
 			}
 		);
@@ -205,7 +203,7 @@ angular.module('meetingsApp.controllers', ['firebase', 'ngRoute'])
 					var nastavek = new Firebase('https://scorching-fire-5198.firebaseio.com/meetings/'+dogodek);
 					nastavek.on('value', function(meeting1)
 					{	
-						var meetingObj1 = {title: meeting1.val().meetingDescription, start: meeting1.val().start, end: meeting1.val().end, allDay: meeting1.val().allDay, durationEditable: false};
+						var meetingObj1 = {title: meeting1.val().meetingDescription, start: meeting1.val().start, end: meeting1.val().end, allDay: meeting1.val().allDay,color: meeting1.val().color, durationEditable: false};
 						eventsData.push(meetingObj1);
 					})
 				})
@@ -306,11 +304,10 @@ angular.module('meetingsApp.controllers', ['firebase', 'ngRoute'])
   }])
 /*----------------------------------------------------------------------------------------------------------------------------------*/
 
-.controller('navCtrl', function($scope, UserSession, $firebase, $location){
+.controller('navCtrl', function($scope, UserSession, $firebase, $location, $cookieStore){
     $scope.$watch(UserSession.isAuthenticated, function() {
-      //$scope.auth = $cookieStore.get('loggedIn');
-      $scope.userL = UserSession.getUserL();
-      //$scope.userB = UserSession.getUserB();
+      $scope.auth = $cookieStore.get('loggedIn');
+      $scope.userLogin = UserSession.getUserL();
     });
   
     var dataRef = new Firebase("https://scorching-fire-5198.firebaseio.com");
@@ -324,12 +321,12 @@ angular.module('meetingsApp.controllers', ['firebase', 'ngRoute'])
     });
 	
     $scope.logout = function(){
-	  //console.log('i was called? NOOOO');
       auth.logout();
       UserSession.setAuthenticated(false);
       $location.path('/home');
       $scope.isUserLoggedIn = false;
 	  $scope.user = {};
+	  $cookieStore.put('loggedIn', false);
     }
   })
 

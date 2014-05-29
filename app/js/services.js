@@ -39,7 +39,7 @@ meetingsAppServices
 	.factory('UserSession', ['$firebase', 
 		function($firebase) {
 			var authenticated = false;
-			var userL = {};
+			var userLogin = {};
 			var userB = {};
 			var ref;
 			return {  
@@ -53,12 +53,12 @@ meetingsAppServices
 				},
 
 				getUserL: function() {
-					return userL;
+					return userLogin;
 				},
 				
 				getUserInfo: function(){
 					if(authenticated){
-						var info = new Firebase('https://scorching-fire-5198.firebaseio.com/users/'+userL.uid);
+						var info = new Firebase('https://scorching-fire-5198.firebaseio.com/users/'+userLogin.uid);
 						var data = new Array();
 						info.on('value', function(inf){
 							data = { name: inf.val().name, email :inf.val().email };
@@ -71,7 +71,8 @@ meetingsAppServices
 					if(authenticated)
 					{
 						var db = new Firebase('https://scorching-fire-5198.firebaseio.com/meetings');
-						var userRef = new Firebase('https://scorching-fire-5198.firebaseio.com/users/'+userL.uid+'/eventlist/');
+						var userRef = new Firebase('https://scorching-fire-5198.firebaseio.com/users/'+userLogin.uid+'/eventlist/');
+						var barva = '#'+(Math.random()*0xFFFFFF<<0).toString(16);
 						var meetingData = {
 							start: timeStart,
 							end: timeEnd, 
@@ -79,6 +80,7 @@ meetingsAppServices
 							meetingDescription: desc,
 							allDay: allday1,
 							invitedUsers: usrList,
+							color: barva,
 						}
 						
 						var meetingLink = db.push(meetingData);
@@ -105,7 +107,7 @@ meetingsAppServices
 					if(authenticated)
 					{
 						console.log('as kle?');
-						var db = new Firebase('https://scorching-fire-5198.firebaseio.com/users/'+userL.uid);
+						var db = new Firebase('https://scorching-fire-5198.firebaseio.com/users/'+userLogin.uid);
 						db.update({name: newName});
 						return true;
 					}
@@ -114,7 +116,7 @@ meetingsAppServices
 				},
 				
 				login: function(user) {
-					userL = user;
+					userLogin = user;
 					ref =  new Firebase('https://scorching-fire-5198.firebaseio.com');				
 					userB = $firebase(ref);
 					authenticated = true;
