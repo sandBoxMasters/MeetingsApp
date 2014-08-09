@@ -14,7 +14,8 @@ var app = angular.module('meetingsApp', [
   'meetingsApp.directives',
   'meetingsApp.controllers',
   'ngCookies',
-  'ui.select2'
+  'ui.select2',
+  'chartjs'
 ]);
 
 app.config(['$routeProvider', function($routeProvider) {
@@ -24,6 +25,7 @@ app.config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/profile', {title: 'Profile', templateUrl: 'usr/profile.html', controller: 'profileCtrl'});
   $routeProvider.when('/events', {title: 'My Events', templateUrl: 'usr/events.html', controller: 'eventsCtrl'});
   $routeProvider.when('/createEvent', {title: 'Create new event', templateUrl: 'usr/createEvent.html', controller: 'createEventCtrl'});
+  $routeProvider.when('/eventView', {title: 'Events per month', templateUrl: 'usr/eventView.html', controller: 'animCtrl'});
   //$routeProvider.when('/groups', {title: 'My Groups', templateUrl: 'usr/groups.html', controller: 'groupsCtrl'});
   //$routeProvider.when('/data/:GID', {title: 'Group Detail', templateUrl: 'usr/groupDetails.html', controller: 'groupDetailCtrl'});
   //$routeProvider.when('/newGroup', {title: 'Create a new group!', templateUrl: 'other/newGroup.html', controller: 'newGroupCtrl'});

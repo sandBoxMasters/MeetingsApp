@@ -3,7 +3,7 @@
     <form class="form-signin" role="form" >
 		<div class="form-group">
 			<h2>Edit Profile</h2>
-			<input type="text" class="form-control" ng-model="userInfo.name" ng-init="userInfo.name" required>
+			<input type="text" class="form-control" ng-model="userInfo.displayName" ng-init="userInfo.displayName" required>
 			<input type="email" class="form-control" value="{{userInfo.email}}" disabled required>
 			<button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="changeName()">Change name</button>
 		</div>

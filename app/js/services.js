@@ -53,6 +53,22 @@ meetingsAppServices
 				},
 
 				getUserL: function() {
+					var userUID = new String(userLogin.uid);
+					if(userUID.indexOf('simplelogin') > -1)
+					{					
+						var info = new Firebase('https://scorching-fire-5198.firebaseio.com/users/'+userLogin.uid);
+						var displayName;
+						info.on('value', function(inf){
+							displayName = inf.val().displayName;
+						})
+						
+						userLogin.displayName = displayName;
+						return userLogin;
+					}
+					if(userUID.indexOf('github') > -1)
+					{
+						
+					}
 					return userLogin;
 				},
 				
@@ -61,7 +77,7 @@ meetingsAppServices
 						var info = new Firebase('https://scorching-fire-5198.firebaseio.com/users/'+userLogin.uid);
 						var data = new Array();
 						info.on('value', function(inf){
-							data = { name: inf.val().name, email :inf.val().email };
+							data = { displayName: inf.val().displayName, email :inf.val().email };
 						})
 						return data;
 					}
@@ -92,8 +108,11 @@ meetingsAppServices
 						{
 							usrList.forEach(function(tmpUID)
 							{
-								userRef = new Firebase('https://scorching-fire-5198.firebaseio.com/users/'+tmpUID+'/eventlist/');
-								userRef.push({title : meetingID});
+								if(tmpUID != userLogin.uid)
+								{
+									userRef = new Firebase('https://scorching-fire-5198.firebaseio.com/users/'+tmpUID+'/eventlist/');
+									userRef.push({title : meetingID});
+								}
 							});
 						}
 						
@@ -108,7 +127,12 @@ meetingsAppServices
 					{
 						console.log('as kle?');
 						var db = new Firebase('https://scorching-fire-5198.firebaseio.com/users/'+userLogin.uid);
-						db.update({name: newName});
+						newName = newName.trim();
+						if(newName.length === 0)
+						{
+							newName = "Ghost";
+						}
+						db.update({displayName: newName});
 						return true;
 					}
 					console.log('al te pa ni!');
