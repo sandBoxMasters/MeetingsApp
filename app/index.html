@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="author" content="Metod Ribiè, Gašper Gašper Primožiè, Marko Tavèar">
 
     <title data-ng-bind="page.title"></title>
 
@@ -13,6 +13,8 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/bootstrap-theme.min.css">
 	<link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css">
+	<link rel="stylesheet" href="css/bootstrap-social.css">
+	<link rel="stylesheet" href="css/font-awesome.min.css">
 
     <!-- Custom styles for this template -->
     <link rel="stylesheet" href="css/offcanvas.css">
@@ -26,24 +28,25 @@
   <body>
     <div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
       <div class="container">
-        <div class="navbar-header">
+        <div class="navbar-header" ng-controller="navCtrl">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#/home">MeetingsApp</a>
+          <a class="navbar-brand" href="#/events" ng-show="isUserLoggedIn">MeetingsApp</a>
+		  <a class="navbar-brand" href="#/home" ng-hide="isUserLoggedIn">MeetingsApp</a>
         </div>
         <div ng-controller="navCtrl" class="collapse navbar-collapse navbar-right" >
           <ul class="nav navbar-nav" ng-hide="isUserLoggedIn">
-            <li><a href="#/login">Login</a></li>
+            <li><a href="#/login">Sign in</a></li>
             <li><a href="#/register">Register</a></li>
           </ul>
 
           <ul class="nav navbar-nav" ng-show="isUserLoggedIn">
-            <li><a href="#/profile">{{userLogin.email}}</a></li>
-            <li><a href="#/home" ng-click="logout()">Log out!</a></li>
+            <li><a href="#/profile">{{userLogin.displayName}}</a></li>
+            <li><a href="#/home" ng-click="logout()">Sign out!</a></li>
           </ul>
 
         </div><!-- /.nav-collapse -->
@@ -51,34 +54,30 @@
     </div><!-- /.navbar -->
 
     <div class="container">
+		<div>
+			<div ng-view id="ng-view" class="slide-animation"></div>
+		</div>
 
-      <div class="row row-offcanvas row-offcanvas-right">
-        <p class="pull-right visible-xs">
-          <button type="button" class="btn btn-primary btn-lg" data-toggle="offcanvas">User Menu</button>
-          
-          <div class="col-xs-3 col-md-3 col-sm-3 col-lg-3 sidebar-offcanvas navbar-right" id="sidebar" role="navigation">
-          <div ng-controller="navCtrl"class="list-group" ng-show="isUserLoggedIn">
-            <a href="#/profile" class="list-group-item">Profile</a>
-            <a href="#/events" class="list-group-item">My Events</a>
-            <!--<a href="#/groups" class="list-group-item">Groups</a>-->
-          </div>
-        </div><!--/span-->
-          <div class="view-container">
-            <div ng-view class="view-frame"></div>
-          </div>
-        </p>
+		<div class="row row-offcanvas row-offcanvas-right">
+			<p class="pull-right visible-xs">
+				<button type="button" class="btn btn-primary btn-lg" data-toggle="offcanvas">User Menu</button>
+				<div class="col-xs-3 col-md-3 col-sm-3 col-lg-3 sidebar-offcanvas navbar-right" id="sidebar" role="navigation">
+					<div ng-controller="navCtrl" class="list-group" ng-show="isUserLoggedIn">
+						<a href="#/profile" class="list-group-item" ng-show="isNotSocialNetwork">Profile</a>
+						<a href="#/events" class="list-group-item">My Events</a>
+						<!--<a href="#/groups" class="list-group-item">Groups</a> -->
+					</div>
+				</div> <!-- /span-->
+			</p>
+		</div>
 
-        
-             
-      </div>
+		<hr>
 
-      <hr>
-
-      <div class="container">
-        <footer>
-          <p>sandBoxMasters &copy; 2014</p>
-        </footer>
-      </div>
+		<div class="container">
+			<footer>
+				<p>sandBoxMasters &copy; 2014</p>
+			</footer>
+		</div>
     </div><!--/.container-->
     
 
@@ -114,6 +113,9 @@
     <script src="js/other/angular_select2.js"></script>
 
     <script src="js/firebase.js"></script>
+	<script src="js/Chart.js"></script>
+    <script src="js/angular-chartjs.js"></script>
+  
   
   
 	

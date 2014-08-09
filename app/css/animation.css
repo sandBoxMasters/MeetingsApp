@@ -1,87 +1,48 @@
-.view-container {
-  position: relative;
+#ng-view {
+  position:relative;
 }
 
-.view-frame.ng-enter,
-.view-frame.ng-leave {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
+/* Animations */
+.slide-animation.ng-enter, .slide-animation.ng-leave {
+  -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+  -moz-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+  -o-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+  transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  min-height:1000px;
+  
+  transition-duration: 450ms;
+  -webkit-transition-duration: 450ms;
 }
 
-.view-frame.ng-enter {
-  -webkit-animation: 0.5s fade-in;
-  -moz-animation: 0.5s fade-in;
-  -o-animation: 0.5s fade-in;
-  animation: 0.5s fade-in;
-  z-index: 100;
+.slide-animation.ng-enter {
+  opacity:0;
+  left:100px;
 }
 
-.view-frame.ng-leave {
-  -webkit-animation: 0.5s fade-out;
-  -moz-animation: 0.5s fade-out;
-  -o-animation: 0.5s fade-out;
-  animation: 0.5s fade-out;
-  z-index: 99;
+.slide-animation.ng-enter.ng-enter-active {
+  left:0;
+  opacity:1;
 }
 
-@keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-@-moz-keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-@-webkit-keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+.slide-animation.ng-leave {
+  left:0;
+  opacity:1;
 }
 
-@keyframes fade-out {
-  from { opacity: 1; }
-  to { opacity: 0; }
-}
-@-moz-keyframes fade-out {
-  from { opacity: 1; }
-  to { opacity: 0; }
-}
-@-webkit-keyframes fade-out {
-  from { opacity: 1; }
-  to { opacity: 0; }
+.slide-animation.ng-leave.ng-leave-active {
+  left:-100px;
+  opacity:0;
 }
 
-.list-animate.ng-enter,
-.list-animate.ng-leave,
-.list-animate.ng-move {
-  -webkit-transition: 0.5s linear all;
-  -moz-transition: 0.5s linear all;
-  -o-transition: 0.5s linear all;
-  transition: 0.5s linear all;
+.slide-animation.ng-enter {
+	transition-delay:0.450s;
 }
 
-.list-animate.ng-enter,
-.list-animate.ng-move {
-  opacity: 0;
-  height: 0;
-  overflow: visible;
-}
-
-.list-animate.ng-move.ng-move-active,
-.list-animate.ng-enter.ng-enter-active {
-  opacity: 1;
-  height: 100%;
-}
-
-.list-animate.ng-leave {
-  opacity: 1;
-  overflow: hidden;
-}
-
-.list-animate.ng-leave.ng-leave-active {
-  opacity: 0;
-  height: 0;
-  padding-top: 0;
-  padding-bottom: 0;
+.slide-animation.ng-leave-stagger {
+	animation-delay:0.450s;
 }

@@ -1,16 +1,31 @@
 <div class="col-xs-12">
 	<div class="jumbotron">
 		<form class="form-signin" role="form">
-        <h2>Login</h2>
-        <input type="email" ng-model="email" class="form-control" placeholder="Email address" required autofocus>
-        <input type="password" ng-model="password" class="form-control" placeholder="Password" required>
-        <button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="LoginEP()">Sign in</button>
-        <label>
-
-        	<a href="#/register">Don't have an account? Register here!</a>
-    	</label>
-
-      </form>
+			<h2>Sign in</h2>
+			<input type="email" ng-model="email" class="form-control" placeholder="Email address" required autofocus>
+			<input type="password" ng-model="password" class="form-control" placeholder="Password" required>
+			<button class="btn btn-lg btn-primary btn-block" type="submit" ng-click="LoginEP()">Sign in</button>
+		</form>
+		
+		<form class="form-signin" role="form">
+			<h3>Or Sign in with</h3>
+			<button class="btn btn-social-icon btn-lg btn-facebook" type="submit" ng-click="LoginFacebook()">
+				<i class="fa fa-facebook"></i>
+			</button>
+			<button class="btn btn-social-icon btn-lg btn-github" type="submit" ng-click="LoginGitHub()">
+				<i class="fa fa-github"></i>
+			</button>
+			<button class="btn btn-social-icon btn-lg btn-google-plus" type="submit" ng-click="LoginGoogle()">
+				<i class="fa fa-google-plus"></i>
+			</button>
+			<button class="btn btn-social-icon btn-lg btn-twitter" type="submit" ng-click="LoginTwitter()">
+				<i class="fa fa-twitter"></i>
+			</button>
+			<hr>
+			<label>
+				<a href="#/register">Don't have an account and you don't use social networks? Register here!</a>
+			</label>
+		</form>
 
 	</div>
 </div> 

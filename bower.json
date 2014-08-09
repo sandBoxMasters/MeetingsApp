@@ -10,6 +10,7 @@
     "angular-route": "1.2.x",
     "angular-loader": "1.2.x",
     "angular-mocks": "~1.2.15",
-    "eonasdan-bootstrap-datetimepicker": "~3.0.0"
+    "eonasdan-bootstrap-datetimepicker": "~3.0.0",
+    "chartjs": "~0.2.0"
   }
 }

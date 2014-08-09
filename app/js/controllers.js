@@ -14,8 +14,8 @@ angular.module('meetingsApp.controllers', ['firebase', 'ngRoute'])
 
 /* -------------------------------------------------- login controler ---------------------------------------------------------------------- */
 
-  .controller('loginCtrl', ['$scope', '$firebaseSimpleLogin', 'UserSession', '$location', '$cookieStore',
-  function($scope, $firebaseSimpleLogin, UserSession, $location, $cookieStore) {
+  .controller('loginCtrl', ['$scope', '$firebaseSimpleLogin', 'UserSession', '$location', '$cookieStore', '$firebase', 
+  function($scope, $firebaseSimpleLogin, UserSession, $location, $cookieStore, $firebase) {
     var ref = new Firebase('https://scorching-fire-5198.firebaseio.com');
     var auth = new FirebaseSimpleLogin(ref, function(error, user)
     {
@@ -26,19 +26,25 @@ angular.module('meetingsApp.controllers', ['firebase', 'ngRoute'])
       }
       else if(user)
       {
-        user_id = user.uid;
-        UserSession.login(user);
-        $location.path('/events');
-        console.log('User: ' + user.uid + ', Provider: ' + user.provider);
-		
-			if (user.provider === "facebook")
+			var users = new Firebase("https://scorching-fire-5198.firebaseio.com/users");
+			$scope.users = $firebase(users);
+			
+			UserSession.login(user);
+			$location.path('/events');
+			console.log('User: ' + user.uid + ', Provider: ' + user.provider);
+			
+			if (user.provider !== "password")
 			{
+				if(user.provider === "github")
+				{
+					user.displayName = user.username;
+				}
+				// NEKI POGRUNTI DA BO DELALO TUDI CE DAM HARD FREFRESH!!
 				if (typeof $scope.users[user.uid] === "undefined" )
 				{
+					console.log('using save?');
+					user.id = '' + user.provider + ':' + user.id;
 					$scope.users[user.uid] = user;
-					$scope.users.$save(user.uid);
-				}else
-				{
 					$scope.users.$save(user.uid);
 				}
 			}
@@ -56,12 +62,34 @@ angular.module('meetingsApp.controllers', ['firebase', 'ngRoute'])
 		$cookieStore.put('loggedIn', true);
     }
 	
-	$scope.LoginFB = function() {
+	$scope.LoginFacebook = function() {
 		auth.login('facebook', {
 			scope: 'email,user_likes'
 		});
 		$cookieStore.put('loggedIn', true);
 	}
+	
+	$scope.LoginGitHub = function() {
+		auth.login('github', {
+			scope: 'user,gist'
+		});
+	}
+
+	$scope.LoginGoogle = function() {
+		auth.login('google', {
+			scope: 'https://www.googleapis.com/auth/plus.login'
+		});
+	}
+	
+	$scope.LoginTwitter = function() {
+		auth.login('twitter');
+	}
+	
+	/*
+	auth.login('github', {
+  rememberMe: true,
+  scope: 'user,gist'
+});*/
   }])
 
 
@@ -87,6 +115,7 @@ angular.module('meetingsApp.controllers', ['firebase', 'ngRoute'])
 		
 		$scope.register = function()
 		{
+			$location.path('/events');
 			auth.createUser($scope.regEmail, $scope.regPass, function(error, user) 
 			{
 				if (error) 
@@ -102,7 +131,7 @@ angular.module('meetingsApp.controllers', ['firebase', 'ngRoute'])
 					var otherData = {
 						id: user.uid,
 						email: $scope.regEmail,
-						name: $scope.regName,
+						displayName: $scope.regName,
 					}
 					
 					$scope.users[user.uid] = otherData;
@@ -161,8 +190,13 @@ angular.module('meetingsApp.controllers', ['firebase', 'ngRoute'])
 		$scope.changeName = function()
 		{
 			console.log('changeName');
-			if(!UserSession.changeName($scope.userInfo.name)) alert('Error changing name.');
-			else alert('Name changed!');
+			if(!UserSession.changeName($scope.userInfo.displayName)) alert('Error changing name.');
+			else
+			{
+				alert('Name changed!');
+				$scope.userLogin.displayName = $scope.userInfo.displayName;
+				$location.path('/events');
+			}
 		}
 		
 		$scope.changePassword = function()
@@ -244,6 +278,7 @@ angular.module('meetingsApp.controllers', ['firebase', 'ngRoute'])
 	{
 		if(!UserSession.isAuthenticated()) $location.path('/');
 		
+		var myID;
 		var ref = new Firebase('https://scorching-fire-5198.firebaseio.com');
 		var auth = new FirebaseSimpleLogin(ref, function(error, user)
 		{
@@ -253,7 +288,9 @@ angular.module('meetingsApp.controllers', ['firebase', 'ngRoute'])
 			}
 			else if(user)
 			{
-				// TODO
+				/*myID = user.id;
+				console.log('my display name is: ' + myID);
+				*/
 			}
 			else
 			{
@@ -280,14 +317,22 @@ angular.module('meetingsApp.controllers', ['firebase', 'ngRoute'])
 		{	//console.log(tmp.val());
 				tmp.forEach(function(arg)
 				{	
-					vsi.push({id: arg.val().id, text: arg.val().email});
+					vsi.push({id: arg.val().id, text: arg.val().displayName});
 				});
-
 		});
 		
 		$scope.tagsSelection=[];
-		$scope.tagData = vsi;    
-
+		$scope.tagData = vsi;
+		
+		/*
+		function compare(a,b) {
+			if (a.text < b.text)
+				return -1;
+			if (a.text > b.text)
+				return 1;
+			return 0;
+		}
+		*/
 	}
 ])
 
@@ -315,6 +360,12 @@ angular.module('meetingsApp.controllers', ['firebase', 'ngRoute'])
       if (user){
         user_id = user.uid;
         $scope.isUserLoggedIn = true;
+		
+		if(user.provider === 'password')
+			$scope.isNotSocialNetwork = true;
+		else
+			$scope.isNotSocialNetwork = false;
+			
       } else {
         $scope.isUserLoggedIn = false;
       }
@@ -330,13 +381,109 @@ angular.module('meetingsApp.controllers', ['firebase', 'ngRoute'])
     }
   })
 
+  /* -------------------------------------------------- 'events per month' controler ---------------------------------------------------------------------- */
+
+  .controller('animCtrl', ['$scope', 'UserEvents', 'UserSession', '$location',
+    function($scope, UserEvents, UserSession, $location)
+	{
+		if(UserSession.isAuthenticated())
+		{
+			var user = UserSession.getUserL().uid;
+			var eventsData = new Array();
+			var userEventRef = new Firebase('https://scorching-fire-5198.firebaseio.com/users/'+user+'/eventlist/');
+			var meseci = ['January', 'February', 'March', 'April', 'May', 'June','July', 'August', 'September', 'October', 'November', 'December'];
+			var eventCount = [0,0,0,0,0,0,0,0,0,0,0,0];
+			var userEventsRef = userEventRef.on('value', function(tmp)
+			{
+				tmp.forEach(function(arg)
+				{
+					var dogodek = arg.val().title;
+					var nastavek = new Firebase('https://scorching-fire-5198.firebaseio.com/meetings/'+dogodek);
+					nastavek.on('value', function(meeting1)
+					{	
+						//var meetingObj1 = {start: meeting1.val().start, end: meeting1.val().end};
+						//eventsData.push(meetingObj1);
+						var start = meeting1.val().start.split(" ",1);
+						//console.log("test");
+						var end = meeting1.val().end.split(" ",1);
+						var start1 = start[0].split("-");
+						var end1 = end[0].split("-");
+
+						if(parseInt(end1[1]) == parseInt(start1[1])){
+							switch(parseInt(start1[1])){
+								case 1: eventCount[0]++;break;
+								case 2: eventCount[1]++;break;
+								case 3: eventCount[2]++;break;
+								case 4: eventCount[3]++;break;
+								case 5: eventCount[4]++;break;
+								case 6: eventCount[5]++;break;
+								case 7: eventCount[6]++;break;
+								case 8: eventCount[7]++;break;
+								case 9: eventCount[8]++;break;
+								case 10: eventCount[9]++;break;
+								case 11: eventCount[10]++;break;
+								case 12: eventCount[11]++;break;
+							}
+						}
+						else if(parseInt(end1[1]) > parseInt(start1[1])){
+							for (var i = start1[1]; i<=end1[1]; i++) {
+								switch(parseInt(i)){
+									case 1: eventCount[0]++;break;
+									case 2: eventCount[1]++;break;
+									case 3: eventCount[2]++;break;
+									case 4: eventCount[3]++;break;
+									case 5: eventCount[4]++;break;
+									case 6: eventCount[5]++;break;
+									case 7: eventCount[6]++;break;
+									case 8: eventCount[7]++;break;
+									case 9: eventCount[8]++;break;
+									case 10: eventCount[9]++;break;
+									case 11: eventCount[10]++;break;
+									case 12: eventCount[11]++;break;
+								}
+							};
+						}
+						
+					})
+				})
+			});
+
+
+			$scope.chart = {
+			    labels : meseci,
+			    datasets : [
+		        {
+		            fillColor: "rgba(151,187,205,0.6)",
+		            strokeColor: "rgba(151,187,205,1)",
+		            pointColor: "rgba(151,187,205,1)",
+		            pointStrokeColor: "#fff",
+		            pointHighlightFill: "#fff",
+		            pointHighlightStroke: "rgba(151,187,205,1)",
+		            data : eventCount,
+		        }
+		    	],
+			};
+
+			$scope.chartOptions = {
+					scaleOverride: true,
+				    scaleStepWidth: 1,
+				    scaleStartValue: 0,
+			};
+
+/*			//izpis števila eventov v konzolo
+			for (var i = 0; i < eventCount.length; i++) {
+				console.log(meseci[i]+": "+eventCount[i]);
+			};
+*/			
+		}
+		else
+		{
+			$location.path('/home');
+		}
+    }
+  ])
+
+/* -------------------------------------------------- end of 'events per month' controler ------------------------------------------------------------- */
+
+  
 ;
-
-
-
-
-/**
-  TODO:
-  Pametno bi blo spremenit eventsCtrl, da bo mel scope userMeetings al neki in ne user, in potem ustrezno pohendlat po viewjih!
-
- **/
