@@ -1,0 +1,10 @@
+index.html
+home.html
+controllers.js
+services.js
+login.html
+register.html
+profile.html
+
+dodano: awsome font
+	bootstrap-social.css
